@@ -14,6 +14,27 @@
   <artifactId>objectify-test</artifactId>
 
   <dependencies>
-    
+    <dependency>
+      <groupId>io.md</groupId>
+      <artifactId>objectify-dao</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.md</groupId>
+      <artifactId>objectify-processor</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.googlecode.objectify</groupId>
+      <artifactId>objectify</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-api-1.0-sdk</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
   </dependencies>
 </project>

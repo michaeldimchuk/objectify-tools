@@ -14,6 +14,37 @@
   <artifactId>objectify-processor</artifactId>
 
   <dependencies>
-    
+    <dependency>
+      <groupId>io.md</groupId>
+      <artifactId>objectify-dao</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.googlecode.objectify</groupId>
+      <artifactId>objectify</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.auto.service</groupId>
+      <artifactId>auto-service</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+    </dependency>
   </dependencies>
 </project>

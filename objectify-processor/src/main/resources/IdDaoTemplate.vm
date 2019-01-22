@@ -1,0 +1,17 @@
+package ${PACKAGE};
+
+import javax.annotation.Generated;
+import javax.inject.Singleton;
+
+#if (${DAO_DIFFERENT_PACKAGE})
+import ${DAO_PACKAGE}.${DAO_NAME};
+#end
+
+@Singleton
+@Generated("${PROCESSOR}")
+public class ${ENTITY_NAME}Dao implements ${DAO_NAME}<${ENTITY_NAME}> {
+  @Override
+  public Class<${ENTITY_NAME}> getType() {
+    return ${ENTITY_NAME}.class;
+  }
+}

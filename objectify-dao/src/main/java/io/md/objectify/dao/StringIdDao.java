@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-public interface StringIdDao<T> extends TypedDao<T> {
+public interface StringIdDao<T> extends SyncTypedDao<T> {
 
   default T load(String id) {
     return loadQuery().id(id).now();

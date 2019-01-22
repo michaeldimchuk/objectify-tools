@@ -3,13 +3,9 @@ package io.md.objectify.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.Result;
-import com.googlecode.objectify.cmd.DeleteIds;
-import com.googlecode.objectify.cmd.LoadIds;
-import com.googlecode.objectify.cmd.QueryKeys;
 
-public interface AsyncLongIdWithParentDao<P, T> extends AsyncLongIdDao<T> {
+public interface AsyncLongIdWithParentDao<P, T> extends AsyncLongIdDao<T>, ParentDao<P, T> {
 
   default Result<T> load(P parent, long id) {
     return loadQuery(parent).id(id);
@@ -23,18 +19,6 @@ public interface AsyncLongIdWithParentDao<P, T> extends AsyncLongIdDao<T> {
   default Result<List<T>> load(P parent, Iterable<Long> ids) {
     Map<Long, T> result = loadQuery(parent).ids(ids);
     return new ListByIdResult<>(result);
-  }
-
-  default List<T> list(P parent) {
-    return loadQuery().ancestor(parent).list();
-  }
-
-  default QueryResultIterator<T> iterator(P parent) {
-    return loadQuery().ancestor(parent).iterator();
-  }
-
-  default QueryKeys<T> keys(P parent) {
-    return loadQuery().ancestor(parent).keys();
   }
 
   default Result<Void> delete(P parent) {
@@ -51,13 +35,5 @@ public interface AsyncLongIdWithParentDao<P, T> extends AsyncLongIdDao<T> {
 
   default Result<Void> delete(P parent, Iterable<Long> ids) {
     return deleteQuery(parent).ids(ids);
-  }
-
-  default LoadIds<T> loadQuery(P parent) {
-    return loadQuery().parent(parent);
-  }
-
-  default DeleteIds deleteQuery(P parent) {
-    return deleteQuery().parent(parent);
   }
 }
