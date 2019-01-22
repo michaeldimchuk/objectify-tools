@@ -1,0 +1,23 @@
+# IntelliJ
+.classpath
+.project
+target
+.idea/
+!.idea/saveactions_settings.xml
+*.iml
+
+# VS Code
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+.python-version
+.cache/
+.mypy_cache/
+
+# Maven
+.flattened-pom.xml
+
+#Other
+.DS_Store
