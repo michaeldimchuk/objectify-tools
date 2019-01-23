@@ -1,0 +1,22 @@
+package ${PACKAGE};
+
+import javax.annotation.Generated;
+import javax.inject.Singleton;
+
+#if (${PARENT_DIFFERENT_PACKAGE})
+import ${PARENT_PACKAGE}.${PARENT_NAME};
+#end
+
+#if (${DAO_DIFFERENT_PACKAGE})
+import ${DAO_PACKAGE}.${ASYNC_DAO_NAME};
+#end
+
+@Singleton
+@Generated("${PROCESSOR}")
+public class Async${ENTITY_NAME}Dao implements ${ASYNC_DAO_NAME}<${PARENT_NAME}, ${ENTITY_NAME}> {
+
+  @Override
+  public Class<${ENTITY_NAME}> getType() {
+    return ${ENTITY_NAME}.class;
+  }
+}

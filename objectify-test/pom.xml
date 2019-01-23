@@ -5,8 +5,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.md</groupId>
-    <artifactId>objectify-dao-project</artifactId>
+    <groupId>io.md.code</groupId>
+    <artifactId>objectify-tools</artifactId>
     <relativePath>../</relativePath>
     <version>${revision}</version>  
   </parent>
@@ -15,11 +15,11 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.md</groupId>
+      <groupId>io.md.code</groupId>
       <artifactId>objectify-dao</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.md</groupId>
+      <groupId>io.md.code</groupId>
       <artifactId>objectify-processor</artifactId>
     </dependency>
 
@@ -35,6 +35,19 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
     </dependency>
   </dependencies>
 </project>

@@ -1,17 +1,35 @@
 package ${PACKAGE};
 
+import java.beans.ConstructorProperties;
+
 import javax.annotation.Generated;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 #if (${DAO_DIFFERENT_PACKAGE})
+import ${DAO_PACKAGE}.${ASYNC_DAO_NAME};
 import ${DAO_PACKAGE}.${DAO_NAME};
 #end
 
 @Singleton
 @Generated("${PROCESSOR}")
 public class ${ENTITY_NAME}Dao implements ${DAO_NAME}<${ENTITY_NAME}> {
+
+  private final ${ASYNC_DAO_NAME}<${ENTITY_NAME}> ${ASYNC_DAO_FIELD};
+
+  @Inject
+  @ConstructorProperties({"${ASYNC_DAO_FIELD}"})
+  public ${ENTITY_NAME}Dao(Async${ENTITY_NAME}Dao ${ASYNC_DAO_FIELD}) {
+    this.${ASYNC_DAO_FIELD} = ${ASYNC_DAO_FIELD};
+  }
+
   @Override
   public Class<${ENTITY_NAME}> getType() {
     return ${ENTITY_NAME}.class;
+  }
+
+  @Override
+  public ${ASYNC_DAO_NAME}<${ENTITY_NAME}> async() {
+    return ${ASYNC_DAO_FIELD};
   }
 }
