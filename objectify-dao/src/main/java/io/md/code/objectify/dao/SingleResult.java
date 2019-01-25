@@ -2,14 +2,17 @@ package io.md.code.objectify.dao;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Result;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SingleResult<T> implements Result<T> {
 
-  private final Result<Key<T>> result;
+  Result<Key<T>> result;
 
-  private final T value;
+  T value;
 
   @Override
   public T now() {

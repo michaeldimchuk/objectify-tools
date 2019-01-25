@@ -10,7 +10,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 class Lists {
 
-  static List<Long> asList(long... elements) {
+  List<Long> asList(long... elements) {
     Long[] copy = new Long[elements.length];
     for (int index = 0; index < elements.length; index++) {
       copy[index] = elements[index];
@@ -19,11 +19,11 @@ class Lists {
   }
 
   @SafeVarargs
-  static <T> List<T> asList(T... elements) {
+  <T> List<T> asList(T... elements) {
     return Arrays.asList(elements);
   }
 
-  static <T> List<T> asList(Collection<T> elements) {
+  <T> List<T> asList(Collection<T> elements) {
     return new ArrayList<>(elements);
   }
 }
