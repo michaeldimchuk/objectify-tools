@@ -6,15 +6,6 @@ final class Constants {
   static final String ID_WITH_PARENT_DAO_TEMPLATE = "IdWithParentDaoTemplate.vm";
   static final String ID_DAO_TEMPLATE = "IdDaoTemplate.vm";
 
-  static final String ASYNC_STRING_ID_WITH_PARENT_DAO = AsyncStringIdWithParentDao.class.getSimpleName();
-  static final String ASYNC_LONG_ID_WITH_PARENT_DAO = AsyncLongIdWithParentDao.class.getSimpleName();
-  static final String ASYNC_STRING_ID_DAO = AsyncStringIdDao.class.getSimpleName();
-  static final String ASYNC_LONG_ID_DAO = AsyncLongIdDao.class.getSimpleName();
-  static final String STRING_ID_WITH_PARENT_DAO = StringIdWithParentDao.class.getSimpleName();
-  static final String LONG_ID_WITH_PARENT_DAO = LongIdWithParentDao.class.getSimpleName();
-  static final String STRING_ID_DAO = StringIdDao.class.getSimpleName();
-  static final String LONG_ID_DAO = LongIdDao.class.getSimpleName();
-
   static final String DAO_PACKAGE_NAME = TypedDao.class.getPackage().getName();
 
   static final String PACKAGE = "PACKAGE";

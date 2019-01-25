@@ -13,6 +13,7 @@ import com.googlecode.objectify.Ref;
 class TypeCache {
 
   private final Map<Class<?>, TypeElement> typeElements;
+
   private final Map<Class<?>, TypeMirror> typeMirrors;
 
   TypeCache(Elements elements) {

@@ -2,8 +2,6 @@ package io.md.code.objectify.dao;
 
 import java.util.List;
 
-import com.google.common.collect.Lists;
-
 public interface StringIdWithParentDao<P, T> extends SyncStringIdDao<T>, ParentDao<P, T> {
 
   AsyncStringIdWithParentDao<P, T> async();
@@ -13,11 +11,11 @@ public interface StringIdWithParentDao<P, T> extends SyncStringIdDao<T>, ParentD
   }
 
   default List<T> load(P parent, String... ids) {
-    return Lists.newArrayList(loadQuery(parent).ids(ids).values());
+    return Lists.asList(loadQuery(parent).ids(ids).values());
   }
 
   default List<T> load(P parent, Iterable<String> ids) {
-    return Lists.newArrayList(loadQuery(parent).ids(ids).values());
+    return Lists.asList(loadQuery(parent).ids(ids).values());
   }
 
   default void delete(P parent) {

@@ -2,8 +2,6 @@ package io.md.code.objectify.dao;
 
 import java.util.List;
 
-import com.google.common.collect.Lists;
-
 public interface SyncTypedDao<T> extends TypedDao<T> {
 
   default T save(T entity) {
@@ -13,7 +11,7 @@ public interface SyncTypedDao<T> extends TypedDao<T> {
 
   default List<T> save(T... entities) {
     ofy().save().entities(entities).now();
-    return Lists.newArrayList(entities);
+    return Lists.asList(entities);
   }
 
   default List<T> save(List<T> entities) {

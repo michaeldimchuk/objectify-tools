@@ -26,7 +26,7 @@ public interface AsyncLongIdDao<T> extends AsyncTypedDao<T> {
   }
 
   default Result<Void> delete(long... ids) {
-    return deleteQuery().ids(ids);
+    return delete(Lists.asList(ids));
   }
 
   default Result<Void> delete(Iterable<Long> ids) {

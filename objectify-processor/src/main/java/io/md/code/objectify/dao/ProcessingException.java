@@ -1,6 +1,7 @@
 package io.md.code.objectify.dao;
 
 class ProcessingException extends RuntimeException {
+
   ProcessingException(String message) {
     super(message);
   }

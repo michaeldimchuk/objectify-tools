@@ -3,7 +3,6 @@ package io.md.code.objectify.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.collect.Lists;
 import com.googlecode.objectify.Result;
 import lombok.RequiredArgsConstructor;
 
@@ -14,6 +13,6 @@ public class ListByIdResult<K, T> implements Result<List<T>> {
 
   @Override
   public List<T> now() {
-    return Lists.newArrayList(result.values());
+    return Lists.asList(result.values());
   }
 }

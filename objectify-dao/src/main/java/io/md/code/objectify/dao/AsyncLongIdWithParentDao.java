@@ -30,7 +30,7 @@ public interface AsyncLongIdWithParentDao<P, T> extends AsyncLongIdDao<T>, Paren
   }
 
   default Result<Void> delete(P parent, long... ids) {
-    return deleteQuery(parent).ids(ids);
+    return delete(parent, Lists.asList(ids));
   }
 
   default Result<Void> delete(P parent, Iterable<Long> ids) {

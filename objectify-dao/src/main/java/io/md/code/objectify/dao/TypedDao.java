@@ -33,7 +33,6 @@ public interface TypedDao<T> {
     return ofy().delete().type(getType());
   }
 
-
   default Objectify ofy() {
     return ObjectifyService.ofy();
   }

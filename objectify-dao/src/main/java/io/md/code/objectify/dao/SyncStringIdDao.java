@@ -2,8 +2,6 @@ package io.md.code.objectify.dao;
 
 import java.util.List;
 
-import com.google.common.collect.Lists;
-
 public interface SyncStringIdDao<T> extends SyncTypedDao<T> {
 
   default T load(String id) {
@@ -11,11 +9,11 @@ public interface SyncStringIdDao<T> extends SyncTypedDao<T> {
   }
 
   default List<T> load(String... ids) {
-    return Lists.newArrayList(loadQuery().ids(ids).values());
+    return Lists.asList(loadQuery().ids(ids).values());
   }
 
   default List<T> load(Iterable<String> ids) {
-    return Lists.newArrayList(loadQuery().ids(ids).values());
+    return Lists.asList(loadQuery().ids(ids).values());
   }
 
   default void delete(String id) {

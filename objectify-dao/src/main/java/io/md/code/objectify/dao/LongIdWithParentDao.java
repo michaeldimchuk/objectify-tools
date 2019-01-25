@@ -2,8 +2,6 @@ package io.md.code.objectify.dao;
 
 import java.util.List;
 
-import com.google.common.collect.Lists;
-
 public interface LongIdWithParentDao<P, T> extends AsyncLongIdDao<T>, ParentDao<P, T> {
 
   AsyncLongIdWithParentDao<P, T> async();
@@ -13,11 +11,11 @@ public interface LongIdWithParentDao<P, T> extends AsyncLongIdDao<T>, ParentDao<
   }
 
   default List<T> load(P parent, Long... ids) {
-    return Lists.newArrayList(loadQuery(parent).ids(ids).values());
+    return Lists.asList(loadQuery(parent).ids(ids).values());
   }
 
   default List<T> load(P parent, Iterable<Long> ids) {
-    return Lists.newArrayList(loadQuery(parent).ids(ids).values());
+    return Lists.asList(loadQuery(parent).ids(ids).values());
   }
 
   default void delete(P parent) {
@@ -29,7 +27,7 @@ public interface LongIdWithParentDao<P, T> extends AsyncLongIdDao<T>, ParentDao<
   }
 
   default void delete(P parent, long... ids) {
-    deleteQuery(parent).ids(ids).now();
+    delete(parent, Lists.asList(ids));
   }
 
   default void delete(P parent, Iterable<Long> ids) {

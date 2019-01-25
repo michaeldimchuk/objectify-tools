@@ -3,6 +3,7 @@ package io.md.code.objectify.dao;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.Element;
@@ -14,6 +15,7 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.JavaFileObject;
 
+import com.google.common.collect.ImmutableMap;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Id;
@@ -22,6 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 class ObjectifyDaoGenerator {
+
+  private static final Logger log = LoggerFactory.getLogger(ObjectifyDaoGenerator.class);
 
   private static final String UNSUPPORTED_PARENT_TYPE = "Google's native key type as a parent is not supported, entity was %s";
 
@@ -33,11 +37,7 @@ class ObjectifyDaoGenerator {
 
   private static final String ASYNC_DAO_NAME_TEMPLATE = "%s.Async%sDao";
 
-  private static final String ASYNC_DAO_FIELD_TEMPLATE = "async%sDao";
-
   private static final String DAO_NAME_TEMPLATE = "%s.%sDao";
-
-  private static final Logger log = LoggerFactory.getLogger(ObjectifyProcessor.class);
 
   private final TypeCache typeCache;
 
@@ -53,40 +53,33 @@ class ObjectifyDaoGenerator {
 
   void generate(TypeElement entity) {
     EntityDefinition definition = getEntityDefinition(entity);
-    String fieldName = String.format(ASYNC_DAO_FIELD_TEMPLATE, entity.getSimpleName());
-    SourceFileBuilder builder = getSourceFileBuilder(entity, definition)
-        .put(Constants.PACKAGE, definition.getPackageName())
-        .put(Constants.PROCESSOR, ObjectifyProcessor.class.getCanonicalName())
-        .put(Constants.ENTITY_NAME, entity.getSimpleName())
-        .put(Constants.DAO_PACKAGE, Constants.DAO_PACKAGE_NAME)
-        .put(Constants.ASYNC_DAO_FIELD, fieldName)
-        .put(Constants.DAO_DIFFERENT_PACKAGE, !Classes.getPackage(entity).equals(Constants.DAO_PACKAGE_NAME));
-    addDaoName(builder, definition);
-    addParentPackage(entity, builder, definition);
+    SourceFileBuilder builder = getSourceFileBuilder(entity, definition);
+    populateSourceFileBuilder(entity, definition, builder);
     writeObjectifyDaos(entity, definition, builder);
   }
 
+  private void populateSourceFileBuilder(TypeElement entity, EntityDefinition definition, SourceFileBuilder builder) {
+    getDefaultTemplate().forEach(builder::put);
+    definition.toContext().forEach(builder::put);
+    addDaoName(builder, definition);
+    addParentPackage(entity, builder, definition);
+  }
+
+  private Map<String, String> getDefaultTemplate() {
+    return ImmutableMap.of(
+        Constants.PROCESSOR, ObjectifyProcessor.class.getCanonicalName(),
+        Constants.DAO_PACKAGE, Constants.DAO_PACKAGE_NAME
+    );
+  }
+
   private void writeObjectifyDaos(TypeElement entity, EntityDefinition definition, SourceFileBuilder builder) {
-    String asyncSourceCode = builder.build(getAsyncTemplate(definition));
-    String syncSourceCode = builder.build(getTemplate(definition));
+    DaoConfiguration configuration = DaoConfiguration.of(definition.isStringId(), definition.hasParent());
+    String asyncSourceCode = builder.build(configuration.getAsyncTemplate());
+    String syncSourceCode = builder.build(configuration.getSyncTemplate());
     String asyncDaoName = getObjectifyDaoName(ASYNC_DAO_NAME_TEMPLATE, entity);
     String syncDaoName = getObjectifyDaoName(DAO_NAME_TEMPLATE, entity);
     writeSourceFile(asyncDaoName, asyncSourceCode);
     writeSourceFile(syncDaoName, syncSourceCode);
-  }
-
-  private String getAsyncTemplate(EntityDefinition definition) {
-    if (definition.hasParent()) {
-      return Constants.ASYNC_ID_WITH_PARENT_DAO_TEMPLATE;
-    }
-    return Constants.ASYNC_ID_DAO_TEMPLATE;
-  }
-
-  private String getTemplate(EntityDefinition definition) {
-    if (definition.hasParent()) {
-      return Constants.ID_WITH_PARENT_DAO_TEMPLATE;
-    }
-    return Constants.ID_DAO_TEMPLATE;
   }
 
   private void writeSourceFile(String className, String sourceCode) {
@@ -120,25 +113,9 @@ class ObjectifyDaoGenerator {
   }
 
   private void addDaoName(SourceFileBuilder builder, EntityDefinition definition) {
-    if (definition.isStringId() && definition.hasParent()) {
-      builder.put(Constants.DAO_NAME, Constants.STRING_ID_WITH_PARENT_DAO)
-          .put(Constants.ASYNC_DAO_NAME, Constants.ASYNC_STRING_ID_WITH_PARENT_DAO);
-    } else if (!definition.isStringId() && definition.hasParent()) {
-      builder.put(Constants.DAO_NAME, Constants.LONG_ID_WITH_PARENT_DAO)
-          .put(Constants.ASYNC_DAO_NAME, Constants.ASYNC_LONG_ID_WITH_PARENT_DAO);
-    } else if (!definition.isStringId()) {
-      builder.put(Constants.DAO_NAME, Constants.LONG_ID_DAO)
-          .put(Constants.ASYNC_DAO_NAME, Constants.ASYNC_LONG_ID_DAO);
-    } else {
-      builder.put(Constants.DAO_NAME, Constants.STRING_ID_DAO)
-          .put(Constants.ASYNC_DAO_NAME, Constants.ASYNC_STRING_ID_DAO);
-    }
-  }
-
-  private EntityDefinition getEntityDefinition(TypeElement entity) {
-    EntityDefinition definition = new EntityDefinition();
-    definition.setPackageName(Classes.getPackage(entity));
-    return definition;
+    DaoConfiguration configuration = DaoConfiguration.of(definition.isStringId(), definition.hasParent());
+    builder.put(Constants.DAO_NAME, configuration.getSyncDao())
+        .put(Constants.ASYNC_DAO_NAME, configuration.getAsyncDao());
   }
 
   private SourceFileBuilder getSourceFileBuilder(TypeElement entity, EntityDefinition definition) {
@@ -149,6 +126,13 @@ class ObjectifyDaoGenerator {
       }
     }
     return new SourceFileBuilder();
+  }
+
+  private EntityDefinition getEntityDefinition(TypeElement entity) {
+    EntityDefinition definition = new EntityDefinition();
+    definition.setPackageName(Classes.getPackage(entity));
+    definition.setSimpleName(entity.getSimpleName().toString());
+    return definition;
   }
 
   private void updateDefinition(TypeElement entity, VariableElement field, EntityDefinition definition) {

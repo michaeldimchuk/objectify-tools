@@ -1,10 +1,18 @@
 package io.md.code.objectify.dao;
 
+import java.util.Map;
+
 import javax.lang.model.type.TypeMirror;
+
+import com.google.common.collect.ImmutableMap;
 
 class EntityDefinition {
 
+  private static final String ASYNC_DAO_FIELD = "async%sDao";
+
   private String packageName;
+
+  private String simpleName;
 
   private Boolean stringId;
 
@@ -12,12 +20,12 @@ class EntityDefinition {
 
   private TypeMirror parentType;
 
-  String getPackageName() {
-    return packageName;
-  }
-
   void setPackageName(String packageName) {
     this.packageName = packageName;
+  }
+
+  void setSimpleName(String simpleName) {
+    this.simpleName = simpleName;
   }
 
   boolean isStringId() {
@@ -43,5 +51,14 @@ class EntityDefinition {
   void setParentType(TypeMirror parentType) {
     this.parentType = parentType;
     hasParent = true;
+  }
+
+  Map<String, Object> toContext() {
+    return ImmutableMap.of(
+        Constants.PACKAGE, packageName,
+        Constants.ENTITY_NAME, simpleName,
+        Constants.ASYNC_DAO_FIELD, String.format(ASYNC_DAO_FIELD, simpleName),
+        Constants.DAO_DIFFERENT_PACKAGE, !Constants.DAO_PACKAGE_NAME.equals(packageName)
+    );
   }
 }

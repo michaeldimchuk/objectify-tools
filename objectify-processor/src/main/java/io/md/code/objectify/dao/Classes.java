@@ -14,6 +14,8 @@ import javax.lang.model.type.TypeMirror;
 
 final class Classes {
 
+  private static final String NOT_PACKAGE = "Couldn't get package, element %s is not a root type";
+
   static boolean samePackage(Element first, Element second) {
     return getPackage(first).equals(getPackage(second));
   }
@@ -21,7 +23,7 @@ final class Classes {
   static <T extends Element> String getPackage(T element) {
     Element entityPackage = element.getEnclosingElement();
     if (entityPackage.getKind() != ElementKind.PACKAGE) {
-      throw new ProcessingException("Couldn't get package, element " + element + " is not a root type");
+      throw new ProcessingException(NOT_PACKAGE, element);
     }
     PackageElement packageElement = (PackageElement) entityPackage;
     return packageElement.getQualifiedName().toString();
@@ -36,7 +38,8 @@ final class Classes {
   }
 
   static boolean isParameterizedType(TypeMirror type) {
-    return type.getKind() == TypeKind.DECLARED && type instanceof DeclaredType;
+    return type.getKind() == TypeKind.DECLARED
+        && type instanceof DeclaredType;
   }
 
   static <T extends Element> boolean isField(T element) {
