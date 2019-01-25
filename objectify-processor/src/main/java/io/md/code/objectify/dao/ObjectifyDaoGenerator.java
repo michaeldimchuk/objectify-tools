@@ -88,7 +88,7 @@ class ObjectifyDaoGenerator {
       try (Writer writer = daoFile.openWriter()) {
         writer.write(sourceCode);
       }
-      log.info("Generated {}", className);
+      log.debug("Generated {}", className);
     } catch (IOException e) {
       throw new ProcessingException("Unable to create a source file", e);
     }

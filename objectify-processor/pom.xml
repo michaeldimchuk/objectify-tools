@@ -23,6 +23,10 @@
       <groupId>com.googlecode.objectify</groupId>
       <artifactId>objectify</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-api-1.0-sdk</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>com.google.guava</groupId>

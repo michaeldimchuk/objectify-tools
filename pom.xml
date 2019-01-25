@@ -112,6 +112,7 @@
         <groupId>com.google.auto.service</groupId>
         <artifactId>auto-service</artifactId>
         <version>${auto.service.version}</version>
+        <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.apache.velocity</groupId>
@@ -141,18 +142,6 @@
       <dependency>
         <groupId>com.google.appengine</groupId>
         <artifactId>appengine-api-stubs</artifactId>
-        <version>${appengine.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.google.appengine</groupId>
-        <artifactId>appengine-api-labs</artifactId>
-        <version>${appengine.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.google.appengine</groupId>
-        <artifactId>appengine-tools-sdk</artifactId>
         <version>${appengine.version}</version>
         <scope>test</scope>
       </dependency>
