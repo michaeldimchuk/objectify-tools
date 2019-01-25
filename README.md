@@ -56,7 +56,6 @@ public class CarDao implements LongIdDao<Car> {
 }
 
 ```
-
 # objectify-processor
 
 An annotation processor used to automatically create Objectify DAO implementations based on the interfaces above.
@@ -78,4 +77,4 @@ To use it, simply add the following dependencies to any project with @Entity ann
 
 Note that this implementation is intended to be extremely type specific, so only entities who's parent types are
 explicitly defined will be supported. While `Key<?>` would be a valid parent from the perspective of Objectify,
-this implementation chooses not to support this. Only parents like `Key<Car>` or `Ref<Car` will be supported.
+this implementation chooses not to support this. Only parents like `Key<Car>` or `Ref<Car>` will be supported.
