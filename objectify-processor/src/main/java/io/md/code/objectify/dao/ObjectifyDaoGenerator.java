@@ -20,12 +20,10 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Parent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 class ObjectifyDaoGenerator {
-
-  private static final Logger log = LoggerFactory.getLogger(ObjectifyDaoGenerator.class);
 
   private static final String UNSUPPORTED_PARENT_TYPE = "Google's native key type as a parent is not supported, entity was %s";
 
@@ -39,11 +37,11 @@ class ObjectifyDaoGenerator {
 
   private static final String DAO_NAME_TEMPLATE = "%s.%sDao";
 
-  private final TypeCache typeCache;
+  TypeCache typeCache;
 
-  private final Types types;
+  Types types;
 
-  private final Filer filer;
+  Filer filer;
 
   ObjectifyDaoGenerator(Elements elements, Types types, Filer filer) {
     typeCache = new TypeCache(elements);
@@ -95,11 +93,7 @@ class ObjectifyDaoGenerator {
   }
 
   private String getObjectifyDaoName(String template, TypeElement entity) {
-    return String.format(
-        template,
-        Classes.getPackage(entity),
-        entity.getSimpleName()
-    );
+    return String.format(template, Classes.getPackage(entity), entity.getSimpleName());
   }
 
   private void addParentPackage(TypeElement entity, SourceFileBuilder builder, EntityDefinition definition) {

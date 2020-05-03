@@ -18,19 +18,21 @@ import javax.lang.model.util.Types;
 
 import com.google.auto.service.AutoService;
 import com.googlecode.objectify.annotation.Entity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.experimental.NonFinal;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @AutoService(Processor.class)
 public class ObjectifyProcessor extends AbstractProcessor {
 
-  private static final Logger log = LoggerFactory.getLogger(ObjectifyProcessor.class);
+  @NonFinal
+  Elements elements;
 
-  private Elements elements;
+  @NonFinal
+  Types types;
 
-  private Types types;
-
-  private Filer filer;
+  @NonFinal
+  Filer filer;
 
   @Override
   public synchronized void init(ProcessingEnvironment environment) {

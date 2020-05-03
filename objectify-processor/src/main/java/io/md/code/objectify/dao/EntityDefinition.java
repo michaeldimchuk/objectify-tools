@@ -5,7 +5,13 @@ import java.util.Map;
 import javax.lang.model.type.TypeMirror;
 
 import com.google.common.collect.ImmutableMap;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
+@Setter
+@Getter
+@FieldDefaults(makeFinal = false)
 class EntityDefinition {
 
   private static final String ASYNC_DAO_FIELD = "async%sDao";
@@ -20,20 +26,8 @@ class EntityDefinition {
 
   private TypeMirror parentType;
 
-  void setPackageName(String packageName) {
-    this.packageName = packageName;
-  }
-
-  void setSimpleName(String simpleName) {
-    this.simpleName = simpleName;
-  }
-
   boolean isStringId() {
     return stringId;
-  }
-
-  void setStringId(boolean stringId) {
-    this.stringId = stringId;
   }
 
   boolean hasParent() {
@@ -42,10 +36,6 @@ class EntityDefinition {
 
   boolean hasId() {
     return stringId != null;
-  }
-
-  TypeMirror getParentType() {
-    return parentType;
   }
 
   void setParentType(TypeMirror parentType) {

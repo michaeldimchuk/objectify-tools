@@ -12,9 +12,9 @@ import com.googlecode.objectify.Ref;
 
 class TypeCache {
 
-  private final Map<Class<?>, TypeElement> typeElements;
+  Map<Class<?>, TypeElement> typeElements;
 
-  private final Map<Class<?>, TypeMirror> typeMirrors;
+  Map<Class<?>, TypeMirror> typeMirrors;
 
   TypeCache(Elements elements) {
     typeElements = getKnownTypeElements(elements);

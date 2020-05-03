@@ -1,5 +1,10 @@
 package io.md.code.objectify.dao;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 enum DaoConfiguration {
   LONG_ID(
       AsyncLongIdDao.class.getSimpleName(),
@@ -34,47 +39,17 @@ enum DaoConfiguration {
       true
   );
 
-  private final String asyncDao;
+  String asyncDao;
 
-  private final String syncDao;
+  String syncDao;
 
-  private final String asyncTemplate;
+  String asyncTemplate;
 
-  private final String syncTemplate;
+  String syncTemplate;
 
-  private final boolean hasStringId;
+  boolean hasStringId;
 
-  private final boolean hasParent;
-
-  DaoConfiguration(String asyncDao,
-                   String syncDao,
-                   String asyncTemplate,
-                   String syncTemplate,
-                   boolean hasStringId,
-                   boolean hasParent) {
-    this.asyncDao = asyncDao;
-    this.syncDao = syncDao;
-    this.asyncTemplate = asyncTemplate;
-    this.syncTemplate = syncTemplate;
-    this.hasStringId = hasStringId;
-    this.hasParent = hasParent;
-  }
-
-  String getAsyncDao() {
-    return asyncDao;
-  }
-
-  String getSyncDao() {
-    return syncDao;
-  }
-
-  String getAsyncTemplate() {
-    return asyncTemplate;
-  }
-
-  String getSyncTemplate() {
-    return syncTemplate;
-  }
+  boolean hasParent;
 
   static DaoConfiguration of(boolean hasStringId, boolean hasParent) {
     for (DaoConfiguration daoName : values()) {

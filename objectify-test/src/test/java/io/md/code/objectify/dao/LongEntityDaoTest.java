@@ -13,10 +13,12 @@ import javax.inject.Inject;
 import com.google.common.collect.ImmutableList;
 import com.googlecode.objectify.Key;
 import io.md.code.test.Testable;
+import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.After;
 import org.junit.Test;
 
+@FieldDefaults(makeFinal = false)
 public class LongEntityDaoTest extends Testable {
 
   private static final int ENTITY_COUNT = 3;

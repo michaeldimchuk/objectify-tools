@@ -8,11 +8,13 @@ import com.googlecode.objectify.annotation.Parent;
 import io.md.code.objectify.dao.LongEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @Cache
 @Entity
 @NoArgsConstructor
+@FieldDefaults(makeFinal = false)
 public class DifferentPackageWithParentEntity {
 
   @Parent

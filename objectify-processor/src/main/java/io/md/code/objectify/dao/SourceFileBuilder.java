@@ -9,7 +9,7 @@ import org.apache.velocity.app.VelocityEngine;
 
 class SourceFileBuilder {
 
-  private final VelocityContext context = new VelocityContext();
+  VelocityContext context = new VelocityContext();
 
   SourceFileBuilder put(String key, Object value) {
     context.put(key, value);
