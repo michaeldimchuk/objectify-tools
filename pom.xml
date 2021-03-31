@@ -22,7 +22,7 @@
     <appengine.version>1.9.59</appengine.version>
     <javax.inject.version>1</javax.inject.version>
 
-    <guava.version>27.0.1-jre</guava.version>
+    <guava.version>29.0-jre</guava.version>
     <findbugs.version>3.0.2</findbugs.version>
 
     <slf4j.version>1.7.25</slf4j.version>
